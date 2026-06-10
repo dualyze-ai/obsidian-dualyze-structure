@@ -169,7 +169,7 @@ The [`docs/`](docs/) folder in this repository is a ready-to-open Obsidian vault
 
 ### Manual
 
-1. Download `main.js` and `manifest.json` from [Releases](https://github.com/kojiman55/obsidian-dualyze-structure/releases/latest)
+1. Download `main.js` and `manifest.json` from [Releases](https://github.com/dualyze-ai/obsidian-dualyze-structure/releases/latest)
 2. Place them in your vault's `.obsidian/plugins/dualyze-structure/` folder
 3. Restart Obsidian → Settings → Community Plugins → enable **Dualyze Structure**
 

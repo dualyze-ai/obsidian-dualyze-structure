@@ -33,7 +33,6 @@ const CATEGORY_DEFS: CategoryDef[] = [
 ];
 
 const UNCATEGORIZED_DESC = "Other notes.";
-const ORDER: Category[] = ["Development", "Automation", "Operations", "Architecture", "Uncategorized"];
 
 export function classify(heading: string): Category {
   const h = heading.toLowerCase();

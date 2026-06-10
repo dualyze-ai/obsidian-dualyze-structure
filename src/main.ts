@@ -61,16 +61,16 @@ export default class DualyzeStructurePlugin extends Plugin {
       new Notice("No H2 sections found.");
       return;
     }
-    new ConfirmModal(this.app, parse, this.settings, () =>
-      createStructure(this.app, file, this.settings)
-    ).open();
+    new ConfirmModal(this.app, parse, this.settings, () => {
+      void createStructure(this.app, file, this.settings);
+    }).open();
   }
 
   async loadSettings() {
-    this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+    this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData()) as DualyzeSettings;
   }
 
-  async saveSettings() {
-    await this.saveData(this.settings);
+  saveSettings(): Promise<void> {
+    return this.saveData(this.settings);
   }
 }
