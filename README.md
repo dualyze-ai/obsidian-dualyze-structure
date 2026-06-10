@@ -4,7 +4,7 @@
   <img src="docs/knowledge_map.png" width="1000">
 </p>
 
-Turn long notes into structured notes, indexes, and visual knowledge maps.
+Turn long notes into structured notes, indexes, and visual knowledge maps automatically.
 
 ---
 
