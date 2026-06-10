@@ -4,7 +4,7 @@
   <img src="docs/knowledge_map.png" width="1000">
 </p>
 
-Turn long notes into structured knowledge.
+Turn long notes into structured notes, indexes, and visual knowledge maps.
 
 ---
 
@@ -31,7 +31,7 @@ Preview detected sections before generating.
 ## After
 
 <p align="center">
-  <img src="docs/after_knowledge_map.png" width="1000">
+  <img src="docs/after_knowledge_map.png" width="900">
 </p>
 
 Generate split notes, structure index and visual knowledge maps.
@@ -45,7 +45,7 @@ Generate split notes, structure index and visual knowledge maps.
 | **Structure Split** | Each `##` section becomes an independent note. `###` and deeper headings stay inside their parent. |
 | **Parent Links** | Every split note gets `parent: "[[Source Note]]"` in its frontmatter for backlink navigation. |
 | **Structure Index** | The original note is converted to a clean link list — your navigation hub. |
-| **Knowledge Map** | A Mermaid flowchart in the MOC visualizes the full hierarchy: root → H2 → H3. |
+| **Knowledge Map** | Automatically generates a visual knowledge map in the MOC using Mermaid flowcharts. |
 | **MOC Generation** | A Map of Content lists all related notes and serves as an overview of the whole topic. |
 
 ---
@@ -114,16 +114,7 @@ This MOC provides a navigation hub for the structured notes generated from [[His
 
 ## Knowledge Map
 
-\`\`\`mermaid
-%%{init: {'flowchart': {'useMaxWidth': true}}}%%
-flowchart LR
-  root["History of Classical Music"]
-  root --> s1["Baroque Era"]
-  s1 --> s1_1["Counterpoint"]
-  s1 --> s1_2["Harmony and Tonality"]
-  s1 --> s1_3["Ornamentation"]
-  ...
-\`\`\`
+(Mermaid flowchart generated automatically)
 
 ## Related Notes
 
