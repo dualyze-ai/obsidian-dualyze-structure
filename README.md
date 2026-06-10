@@ -30,7 +30,9 @@ Preview detected sections before generating.
 
 ## After
 
-<!-- screenshot: knowledge-map.png -->
+<p align="center">
+  <img src="docs/after_knowledge_map.png" width="1000">
+</p>
 
 Generate split notes, structure index and visual knowledge maps.
 
