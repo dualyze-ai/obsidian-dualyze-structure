@@ -1,8 +1,6 @@
 export interface DualyzeSettings {
-  /** Output folder for split notes and MOC (relative to vault root; empty = same folder as source note) */
+  /** Output folder for split notes, index, and MOC (relative to vault root) */
   outputFolder: string;
-  /** How to handle the original note body */
-  originalContent: "replace" | "keep";
   /** Whether to generate a MOC */
   generateMOC: boolean;
   /** Separator used in generated file names (default: " - ") */
@@ -11,7 +9,6 @@ export interface DualyzeSettings {
 
 export const DEFAULT_SETTINGS: DualyzeSettings = {
   outputFolder: "Generated",
-  originalContent: "keep",
   generateMOC: true,
   separator: " - ",
 };

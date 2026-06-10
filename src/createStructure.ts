@@ -24,9 +24,9 @@ export async function createStructure(app: App, file: TFile, settings: DualyzeSe
     await writeNote(app, settings.outputFolder, section.noteName, content);
   }
 
-  // 3. Overwrite source file with Structure Index
-  const indexContent = buildStructureIndex(parse, original, settings);
-  await app.vault.modify(file, indexContent);
+  // 3. Structure Index — written to output folder, original file is never modified
+  const indexContent = buildStructureIndex(parse);
+  await writeNote(app, settings.outputFolder, `${rootTitle} Index`, indexContent);
 
   // 4. MOC
   if (settings.generateMOC) {

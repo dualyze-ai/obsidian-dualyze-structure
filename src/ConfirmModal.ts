@@ -27,16 +27,12 @@ export class ConfirmModal extends Modal {
     }
 
     const ul = contentEl.createEl("ul");
-    ["Split Notes", "Parent Links"].forEach((t) =>
+    ["Split Notes", "Parent Links", "Structure Index"].forEach((t) =>
       ul.createEl("li", { text: `✓ ${t}` })
     );
     if (this.settings.generateMOC) ul.createEl("li", { text: "✓ MOC" });
 
-    // Show what will happen to the original note
-    const originalMode = this.settings.originalContent === "replace"
-      ? "✓ Structure Index (original body will be replaced with links)"
-      : "✓ Structure Index (original body will be kept at the bottom)";
-    ul.createEl("li", { text: originalMode });
+    info.createEl("p", { text: "The original note will not be modified." });
 
     new Setting(contentEl)
       .addButton((b) =>
