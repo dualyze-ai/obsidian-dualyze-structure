@@ -26,13 +26,12 @@ export class ConfirmModal extends Modal {
       sectionList.createEl("li", { text: s.heading });
     }
 
+    contentEl.createEl("h4", { text: "Outputs" });
     const ul = contentEl.createEl("ul");
-    ["Split Notes", "Parent Links", "Structure Index"].forEach((t) =>
-      ul.createEl("li", { text: `✓ ${t}` })
-    );
-    if (this.settings.generateMOC) ul.createEl("li", { text: "✓ MOC" });
-
-    info.createEl("p", { text: "The original note will not be modified." });
+    const n = this.parse.sections.length;
+    ul.createEl("li", { text: `✓ ${n} ${n === 1 ? "Split Note" : "Split Notes"}` });
+    ul.createEl("li", { text: "✓ 1 Index Note" });
+    if (this.settings.generateMOC) ul.createEl("li", { text: "✓ 1 MOC Note" });
 
     new Setting(contentEl)
       .addButton((b) =>

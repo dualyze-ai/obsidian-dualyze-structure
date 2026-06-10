@@ -84,6 +84,17 @@ Monitoring content.
     expect(result.sections[2].body).toContain("Unit test content.");
   });
 
+  test("H3 headings are extracted as subsections", () => {
+    const result = splitByH2(baseNote, "AWS SAM", SEP);
+    expect(result.sections[2].subsections).toEqual(["Unit Tests"]);
+  });
+
+  test("sections without H3 have empty subsections array", () => {
+    const result = splitByH2(baseNote, "AWS SAM", SEP);
+    expect(result.sections[0].subsections).toEqual([]);
+    expect(result.sections[3].subsections).toEqual([]);
+  });
+
   test("returns empty sections array when no H2 headings exist", () => {
     const noH2 = "# Title\n\nJust some text without any H2 headings.";
     const result = splitByH2(noH2, "Title", SEP);
@@ -174,5 +185,32 @@ Sightseeing content here.
   test("section count is correct after filtering internal headings", () => {
     const result = splitByH2(alreadyProcessed, "Kyoto Travel Guide", SEP);
     expect(result.sections).toHaveLength(2);
+  });
+});
+
+describe("splitByH2 — edge cases", () => {
+  test("single H2 section returns exactly 1 section", () => {
+    const singleH2 = "# Guide\n\n## Only Section\n\nSome content here.";
+    const result = splitByH2(singleH2, "Guide", SEP);
+    expect(result.sections).toHaveLength(1);
+    expect(result.sections[0].heading).toBe("Only Section");
+    expect(result.sections[0].body).toBe("Some content here.");
+  });
+
+  test("20+ H2 sections are all parsed", () => {
+    const headings = Array.from({ length: 22 }, (_, i) => `## Day ${i + 1}\n\nContent for day ${i + 1}.`);
+    const note = `# Challenge\n\n${headings.join("\n\n")}`;
+    const result = splitByH2(note, "Challenge", SEP);
+    expect(result.sections).toHaveLength(22);
+    expect(result.sections[0].heading).toBe("Day 1");
+    expect(result.sections[21].heading).toBe("Day 22");
+  });
+
+  test("20+ H2 sections all have correct note names", () => {
+    const headings = Array.from({ length: 22 }, (_, i) => `## Day ${i + 1}\n\nContent.`);
+    const note = `# Challenge\n\n${headings.join("\n\n")}`;
+    const result = splitByH2(note, "Challenge", SEP);
+    expect(result.sections[0].noteName).toBe("Challenge - Day 1");
+    expect(result.sections[21].noteName).toBe("Challenge - Day 22");
   });
 });

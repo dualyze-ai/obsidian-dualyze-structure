@@ -1,4 +1,4 @@
-import { Section, Category } from "./types";
+import { Section, Category, KnowledgeVisualization, DualyzeSettings } from "./types";
 import { ParseResult } from "./parser";
 
 // --- Category classification (reserved for future AI MOC Generator) ---
@@ -6,7 +6,6 @@ import { ParseResult } from "./parser";
 interface CategoryDef {
   category: Category;
   keywords: string[];
-  /** One-line description inserted below the category heading */
   description: string;
 }
 
@@ -55,17 +54,61 @@ export function buildCategorySection(cat: Category, items: Section[]): string {
   return out;
 }
 
-// --- MOC builder (v1.0: flat list, no categories) ---
+// --- Knowledge visualization helpers ---
 
-export function buildMOC(parse: ParseResult): string {
-  // Structure Summary header
+export function sanitizeFlowchartLabel(label: string): string {
+  return label.replace(/"/g, "'");
+}
+
+function buildTextTree(rootTitle: string, noteNames: string[]): string {
+  const lines = noteNames.map((name, i) => {
+    const branch = i === noteNames.length - 1 ? "└─" : "├─";
+    return `${branch} [[${name}]]`;
+  });
+  return `${rootTitle}\n${lines.join("\n")}`;
+}
+
+function buildMermaidFlowchart(rootTitle: string, sections: Section[]): string {
+  const safeRoot = sanitizeFlowchartLabel(rootTitle);
+  const lines: string[] = [
+    `flowchart LR`,
+    `  root["${safeRoot}"]`,
+  ];
+  sections.forEach((s, i) => {
+    const sId = `s${i + 1}`;
+    const label = sanitizeFlowchartLabel(s.heading);
+    lines.push(`  root --> ${sId}["${label}"]`);
+    s.subsections.forEach((sub, j) => {
+      const subLabel = sanitizeFlowchartLabel(sub);
+      lines.push(`  ${sId} --> ${sId}_${j + 1}["${subLabel}"]`);
+    });
+  });
+  return lines.join("\n");
+}
+
+function buildKnowledgeVisualization(parse: ParseResult, mode: KnowledgeVisualization): string {
+  if (mode === "none") return "";
+
+  if (mode === "text-tree") {
+    const tree = buildTextTree(parse.rootTitle, parse.sections.map((s) => s.noteName));
+    return `\n## Knowledge Tree\n\n\`\`\`text\n${tree}\n\`\`\`\n`;
+  }
+
+  // mermaid-flowchart
+  const flowchart = buildMermaidFlowchart(parse.rootTitle, parse.sections);
+  return `\n## Knowledge Map\n\n\`\`\`mermaid\n%%{init: {'flowchart': {'useMaxWidth': true}}}%%\n${flowchart}\n\`\`\`\n`;
+}
+
+// --- MOC builder ---
+
+export function buildMOC(parse: ParseResult, settings: DualyzeSettings): string {
   let out = `# ${parse.rootTitle} MOC\n\n`;
   out += `Generated from:\n[[${parse.rootTitle}]]\n\n`;
   out += `Sections: ${parse.sections.length}\n\n`;
-
-  // Flat section list — works for any topic, not just DevOps
-  out += `## Sections\n\n`;
+  out += `## Overview\n\n`;
+  out += `This MOC provides a navigation hub for the structured notes generated from [[${parse.rootTitle}]].\n`;
+  out += buildKnowledgeVisualization(parse, settings.knowledgeVisualization);
+  out += `\n## Related Notes\n\n`;
   out += parse.sections.map((s) => `- [[${s.noteName}]]`).join("\n") + "\n";
-
   return out;
 }

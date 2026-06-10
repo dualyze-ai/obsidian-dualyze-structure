@@ -1,271 +1,212 @@
 # Dualyze Structure
 
-Turn long notes into structured knowledge.
+Turn long notes into structured knowledge — one command splits a note into atomic files, builds a navigation index, and generates a visual knowledge map.
 
-One command converts a note full of `##` headings into atomic notes, a structure index, and a MOC — all linked together automatically.
+<!-- screenshot: hero — Knowledge Map (Mermaid flowchart) rendered in Obsidian -->
 
 ---
 
-## What it does
+## The Problem
+
+Long notes are easy to write but hard to navigate. As a note grows, finding a specific section means scrolling — and linking to a single concept inside a 2,000-word document is impossible.
 
 ```
-Before                          After
-──────────────────────          ──────────────────────────────────────
-京都旅行ガイド.md               京都旅行ガイド.md  ← Structure Index
-  ## 交通とアクセス               Generated/
-  ## 人気観光スポット               ├─ 京都旅行ガイド - 交通とアクセス.md
-  ## グルメ・食べ歩き              ├─ 京都旅行ガイド - 人気観光スポット.md
-  ## 宿泊スポット                  ├─ 京都旅行ガイド - グルメ・食べ歩き.md
-  ## 季節のイベント                ├─ 京都旅行ガイド - 宿泊スポット.md
-                                   ├─ 京都旅行ガイド - 季節のイベント.md
-                                   └─ 京都旅行ガイド MOC.md
+History of Classical Music.md   ← everything is in one file
+  ## Baroque Era
+  ## Classical Period
+  ## Romantic Era
+  ## Modernism
+  ## After 1945
 ```
 
-### Generated outputs
+Dualyze Structure solves this in one step.
 
-| 出力 | 内容 |
+---
+
+## What It Does
+
+Run **Create Structure** on any note with `##` headings. The plugin:
+
+1. Splits each `##` section into its own atomic note
+2. Adds a `parent:` frontmatter link to each split note
+3. Converts the original note into a **Structure Index** (a linked table of contents)
+4. Generates a **MOC** with a visual knowledge map and related-note links
+
+```
+Before                               After
+──────────────────────               ──────────────────────────────────────────
+History of Classical Music.md        History of Classical Music.md  ← Index
+  ## Baroque Era                       Generated/
+  ## Classical Period                    ├─ History of Classical Music - Baroque Era.md
+  ## Romantic Era                        ├─ History of Classical Music - Classical Period.md
+  ## Modernism                           ├─ History of Classical Music - Romantic Era.md
+  ## After 1945                          ├─ History of Classical Music - Modernism.md
+                                         ├─ History of Classical Music - After 1945.md
+                                         └─ History of Classical Music MOC.md
+```
+
+The original note is **never deleted or permanently modified** — the plugin rewrites it in place as the index, and the full original content is preserved in the split notes.
+
+---
+
+## Features
+
+| Feature | Description |
 |---|---|
-| **Split Notes** | H2 セクションごとの独立したノート |
-| **Parent Links** | 各分割ノートに `parent: [[元ノート]]` の frontmatter |
-| **Structure Index** | 元ノートを分割ノートへのリンク一覧（目次）に変換 |
-| **MOC** | カテゴリ分類された俯瞰ノート（Structure Summary 付き） |
+| **Structure Split** | Each `##` section becomes an independent note. `###` and deeper headings stay inside their parent. |
+| **Parent Links** | Every split note gets `parent: "[[Source Note]]"` in its frontmatter for backlink navigation. |
+| **Structure Index** | The original note is converted to a clean link list — your navigation hub. |
+| **Knowledge Map** | A Mermaid flowchart in the MOC visualizes the full hierarchy: root → H2 → H3. |
+| **MOC Generation** | A Map of Content lists all related notes and serves as an overview of the whole topic. |
 
 ---
 
-## Installation
+## How to Run It
 
-### Community plugins（推奨）
+Three ways to trigger the command:
 
-1. Obsidian の設定 → コミュニティプラグイン → 閲覧
-2. 「Dualyze Structure」を検索
-3. インストール → 有効化
+**Right-click in the editor** — open any note, right-click the body, select **Create Structure**.
 
-### Manual
+**Right-click in the file explorer** — right-click a note in the left sidebar, select **Create Structure**.
 
-1. [Releases](https://github.com/kojiman55/obsidian-dualyze-structure/releases/latest) から `main.js` と `manifest.json` をダウンロード
-2. Vault の `.obsidian/plugins/dualyze-structure/` フォルダに配置
-3. Obsidian を再起動 → 設定 → コミュニティプラグイン → Dualyze Structure を有効化
+**Command palette** — `Cmd+P` (Windows: `Ctrl+P`), type `Dualyze Structure: Create Structure`.
 
 ---
 
-## Tutorial
+## Confirmation Dialog
 
-### 準備: ノートを用意する
+Before writing any files, the plugin shows a preview of what will be created.
 
-H2 見出し（`##`）が2つ以上あるノートなら何でも動きます。
+<!-- screenshot: confirm dialog -->
 
-例として次のようなノート「**京都旅行ガイド**」があるとします。
+The dialog lists every section it detected, and shows exactly how many files will be generated. Click **Create** to proceed or **Cancel** to abort — nothing is written until you confirm.
+
+---
+
+## Generated Files
+
+### Structure Index (the original note, rewritten)
 
 ```markdown
-# 京都旅行ガイド
-
-京都への旅行をまとめたノートです。
-
-## 交通とアクセス
-
-新幹線でのアクセスは東京から約2時間15分...
-
-## 人気観光スポット
-
-清水寺は朝8時の開門直後が空いている...
-
-## グルメ・食べ歩き
-
-錦市場は朝9時から多くの店が開く...
-
-## 宿泊スポット
-
-町家ゲストハウスが京都らしさを体験できる...
-
-## 季節のイベント
-
-桜の名所は円山公園の祇園枝垂桜...
-```
-
----
-
-### Step 1: コマンドを実行する
-
-3つの方法から好みのものを選べます。
-
-#### 方法 A: エディタ内で右クリック（最も手軽）
-
-ノートを開いた状態で本文を右クリックします。
-
-```
-┌─────────────────────────────────────────┐
-│  Edit                                   │
-│  Cut                                    │
-│  Copy                                   │
-│  Paste                                  │
-│ ─────────────────────────────────────── │
-│ ⑂  Create Structure          ←ここ      │
-└─────────────────────────────────────────┘
-```
-
-#### 方法 B: ファイルエクスプローラーで右クリック
-
-左サイドバーのファイル一覧でノートを右クリックします。
-
-```
-┌─────────────────────────────────────────┐
-│  Open in new tab                        │
-│  Open to the right                      │
-│  Rename                                 │
-│  Delete                                 │
-│ ─────────────────────────────────────── │
-│ ⑂  Create Structure          ←ここ      │
-└─────────────────────────────────────────┘
-```
-
-#### 方法 C: コマンドパレット
-
-`Cmd+P`（Windows: `Ctrl+P`）でコマンドパレットを開き、`Dualyze Structure: Create Structure` を実行します。
-
----
-
-### Step 2: 確認ダイアログで内容を確認する
-
-実行前に確認ダイアログが表示されます。何が作られるかを事前に確認できます。
-
-```
-┌──────────────────────────────────────────┐
-│  Create structure from current note?    │
-│ ──────────────────────────────────────── │
-│  Root Note:  京都旅行ガイド             │
-│                                          │
-│  Detected Sections (5)                  │
-│    • 交通とアクセス                      │
-│    • 人気観光スポット                    │
-│    • グルメ・食べ歩き                    │
-│    • 宿泊スポット                        │
-│    • 季節のイベント                      │
-│                                          │
-│  ✓ Split Notes (5)                      │
-│  ✓ Parent Links                         │
-│  ✓ Structure Index                      │
-│  ✓ MOC                                  │
-│                                          │
-│  [ Create ]  [ Cancel ]                 │
-└──────────────────────────────────────────┘
-```
-
-問題なければ **Create** をクリックします。
-
----
-
-### Step 3: 生成されたファイルを確認する
-
-`Generated/` フォルダに分割ノートと MOC が作成されます。
-
-```
-📄 京都旅行ガイド.md          ← Structure Index に変換済み
-📁 Generated/
-   ├─ 京都旅行ガイド - 交通とアクセス.md
-   ├─ 京都旅行ガイド - 人気観光スポット.md
-   ├─ 京都旅行ガイド - グルメ・食べ歩き.md
-   ├─ 京都旅行ガイド - 宿泊スポット.md
-   ├─ 京都旅行ガイド - 季節のイベント.md
-   └─ 京都旅行ガイド MOC.md
-```
-
----
-
-### 生成物の詳細
-
-#### Structure Index（元ノートが変換される）
-
-```markdown
-# 京都旅行ガイド
+# History of Classical Music
 
 ## Structure
 
-- [[京都旅行ガイド - 交通とアクセス]]
-- [[京都旅行ガイド - 人気観光スポット]]
-- [[京都旅行ガイド - グルメ・食べ歩き]]
-- [[京都旅行ガイド - 宿泊スポット]]
-- [[京都旅行ガイド - 季節のイベント]]
+- [[History of Classical Music - Baroque Era]]
+- [[History of Classical Music - Classical Period]]
+- [[History of Classical Music - Romantic Era]]
+- [[History of Classical Music - Modernism]]
+- [[History of Classical Music - After 1945]]
 ```
 
-#### 分割ノート（Parent Link 付き）
+### Split Note (with parent link)
 
 ```markdown
 ---
-parent: "[[京都旅行ガイド]]"
+parent: "[[History of Classical Music]]"
 ---
 
-# 交通とアクセス
+# Baroque Era
 
-新幹線でのアクセスは東京から約2時間15分...
+Counterpoint is the art of combining independent melodic lines...
 ```
 
-#### MOC（Structure Summary 付き）
+### MOC (with Knowledge Map)
 
 ```markdown
-# 京都旅行ガイド MOC
+# History of Classical Music MOC
 
 Generated from:
-[[京都旅行ガイド]]
+[[History of Classical Music]]
 
 Sections: 5
 
-Categories:
-- Uncategorized
+## Overview
 
-## Uncategorized
+This MOC provides a navigation hub for the structured notes generated from [[History of Classical Music]].
 
-Other notes.
+## Knowledge Map
 
-- [[京都旅行ガイド - 交通とアクセス]]
-- [[京都旅行ガイド - 人気観光スポット]]
-- [[京都旅行ガイド - グルメ・食べ歩き]]
-- [[京都旅行ガイド - 宿泊スポット]]
-- [[京都旅行ガイド - 季節のイベント]]
+\`\`\`mermaid
+%%{init: {'flowchart': {'useMaxWidth': true}}}%%
+flowchart LR
+  root["History of Classical Music"]
+  root --> s1["Baroque Era"]
+  s1 --> s1_1["Counterpoint"]
+  s1 --> s1_2["Harmony and Tonality"]
+  s1 --> s1_3["Ornamentation"]
+  ...
+\`\`\`
+
+## Related Notes
+
+- [[History of Classical Music - Baroque Era]]
+- [[History of Classical Music - Classical Period]]
+...
 ```
 
-> **カテゴリ分類について**: MOC はセクション見出しのキーワードでカテゴリ（Development / Automation / Operations / Architecture）を自動判定します。料理・旅行ノートのように一般的な見出しの場合は Uncategorized にまとめられます。
+<!-- screenshot: before/after — original note vs generated MOC with flowchart -->
 
 ---
 
 ## Settings
 
-設定 → コミュニティプラグイン → Dualyze Structure の歯車アイコンから変更できます。
+Settings → Community Plugins → Dualyze Structure (gear icon).
 
-| 設定 | 既定値 | 説明 |
+| Setting | Default | Description |
 |---|---|---|
-| Output folder | `Generated` | 分割ノートと MOC の出力先（Vault ルートからの相対パス） |
-| Original content | `Replace` | 元ノートの本文の扱い。`Replace`: リンク一覧に置き換え / `Keep`: 元本文を末尾に保持 |
-| Generate MOC | ON | MOC を生成するかどうか |
-
----
-
-## How splitting works
-
-- ノートは `##`（H2）見出しを境界として分割されます
-- `###`（H3）以下の小見出しは、その親 H2 ノートの中にそのまま含まれます
-- H1 やリード文（H2 より前の本文）は分割ノートには含まれません
-- ファイル名の規則: `<元ノート名> - <見出し名>`（例: `京都旅行ガイド - 交通とアクセス`）
-- `CI/CD` のようにスラッシュを含む見出しはファイル名で自動的に `CI-CD` に変換されます
+| Output folder | `Generated` | Folder for split notes and MOC (relative to vault root) |
+| Generate MOC | On | Whether to generate the MOC file |
+| Knowledge visualization | Mermaid Flowchart | Visual style for the Knowledge Map in the MOC: Mermaid Flowchart / Text Tree / None |
+| File naming style | Spaced | `Spaced`: `Title Index.md` / `Title MOC.md` — `Dot`: `Title.structure.md` / `Title.moc.md` |
 
 ---
 
 ## Sample Vault
 
-動作をすぐ試せるサンプル Vault を用意しています。
+The [`docs/`](docs/) folder in this repository is a ready-to-open Obsidian vault with five demo notes and the plugin pre-installed.
 
-- 収録ノート: イタリアンパスタ完全ガイド・京都旅行ガイド（各 5 セクション）
-- `Generated/` フォルダに完成例を収録済み（実行前後の比較が可能）
+| Note | H2 Sections | H3 Sections | Best for |
+|---|---|---|---|
+| [History of Classical Music](docs/History%20of%20Classical%20Music.md) | 5 | 3 per section | Flowchart depth demo |
+| [History of Western Art](docs/History%20of%20Western%20Art.md) | 6 | 2–3 per section | Large note demo |
+| [Film Language](docs/Film%20Language.md) | 5 | 2–3 per section | Narrative structure |
+| [Jazz Music Guide](docs/Jazz%20Music%20Guide.md) | 5 | 0–3 per section | Mixed hierarchy |
+| [Color Theory for Creatives](docs/Color%20Theory%20for%20Creatives.md) | 5 | 2–3 per section | Creative topic |
 
-サンプル Vault の利用方法については [sample vault の README](https://github.com/kojiman55/obsidian-dualyze-structure) を参照してください。
+**To try the sample vault:**
+
+1. Download or clone this repository
+2. Open the `docs/` folder as a vault in Obsidian
+3. Trust community plugins when prompted
+4. Open any sample note → right-click → **Create Structure**
 
 ---
 
-## Roadmap
+## Installation
 
-将来バージョンで追加予定:
+### Community Plugins (recommended)
 
-- **Related Topics** — 被リンク・関連ノートの自動抽出
-- **Context Pack Ready スコア** — AI Context Pack との連携スコア
+1. Obsidian Settings → Community Plugins → Browse
+2. Search for **Dualyze Structure**
+3. Install → Enable
+
+### Manual
+
+1. Download `main.js` and `manifest.json` from [Releases](https://github.com/kojiman55/obsidian-dualyze-structure/releases/latest)
+2. Place them in your vault's `.obsidian/plugins/dualyze-structure/` folder
+3. Restart Obsidian → Settings → Community Plugins → enable **Dualyze Structure**
+
+---
+
+## How Splitting Works
+
+- Notes are split at every `##` (H2) heading
+- `###` (H3) and deeper headings stay inside their parent H2 note
+- Lead text before the first `##` is not included in split notes
+- File names follow the pattern `<Note Title> - <Section Heading>` (example: `History of Classical Music - Baroque Era`)
+- Characters invalid in file names (`/ \ : # ^ [ ] |`) are replaced with `-` or removed
+- Running the plugin a second time on the same note appends `-1`, `-2`, etc. — the original is never overwritten
 
 ---
 

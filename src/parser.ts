@@ -42,5 +42,8 @@ function toSection(
 ): Section {
   const body = cur.bodyLines.join("\n").replace(/^\n+|\n+$/g, "");
   const noteName = sanitizeFileName(`${rootTitle}${separator}${cur.heading}`);
-  return { heading: cur.heading, body, noteName };
+  const subsections = cur.bodyLines
+    .map((l) => l.match(/^###\s+(.+?)\s*$/)?.[1]?.trim())
+    .filter((h): h is string => h !== undefined);
+  return { heading: cur.heading, body, noteName, subsections };
 }

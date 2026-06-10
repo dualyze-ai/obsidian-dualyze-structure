@@ -1,5 +1,5 @@
 import { App, Notice, TFile } from "obsidian";
-import { DualyzeSettings } from "./types";
+import { DualyzeSettings, indexFileName, mocFileName } from "./types";
 import { splitByH2 } from "./parser";
 import { buildSplitNoteContent } from "./parentLink";
 import { buildStructureIndex } from "./structureIndex";
@@ -26,13 +26,14 @@ export async function createStructure(app: App, file: TFile, settings: DualyzeSe
 
   // 3. Structure Index — written to output folder, original file is never modified
   const indexContent = buildStructureIndex(parse);
-  await writeNote(app, settings.outputFolder, `${rootTitle} Index`, indexContent);
+  await writeNote(app, settings.outputFolder, indexFileName(rootTitle, settings.namingStyle), indexContent);
 
   // 4. MOC
   if (settings.generateMOC) {
-    const mocContent = buildMOC(parse);
-    await writeNote(app, settings.outputFolder, `${rootTitle} MOC`, mocContent);
+    const mocContent = buildMOC(parse, settings);
+    await writeNote(app, settings.outputFolder, mocFileName(rootTitle, settings.namingStyle), mocContent);
   }
 
-  new Notice(`Dualyze Structure: created ${parse.sections.length} notes.`);
+  const n = parse.sections.length;
+  new Notice(`Dualyze Structure: created ${n} ${n === 1 ? "note" : "notes"}.`);
 }
