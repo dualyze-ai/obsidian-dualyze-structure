@@ -1,6 +1,8 @@
 import { Section, Category } from "./types";
 import { ParseResult } from "./parser";
 
+// --- Category classification (reserved for future AI MOC Generator) ---
+
 interface CategoryDef {
   category: Category;
   keywords: string[];
@@ -53,31 +55,17 @@ export function buildCategorySection(cat: Category, items: Section[]): string {
   return out;
 }
 
+// --- MOC builder (v1.0: flat list, no categories) ---
+
 export function buildMOC(parse: ParseResult): string {
-  const groups = new Map<Category, Section[]>();
-  for (const s of parse.sections) {
-    const cat = classify(s.heading);
-    if (!groups.has(cat)) groups.set(cat, []);
-    groups.get(cat)!.push(s);
-  }
-
-  const usedCategories: Category[] = ORDER.filter((cat) => {
-    const items = groups.get(cat);
-    return items && items.length > 0;
-  });
-
   // Structure Summary header
-  const categoryList = usedCategories.map((c) => `- ${c}`).join("\n");
   let out = `# ${parse.rootTitle} MOC\n\n`;
   out += `Generated from:\n[[${parse.rootTitle}]]\n\n`;
   out += `Sections: ${parse.sections.length}\n\n`;
-  out += `Categories:\n${categoryList}\n`;
 
-  // Category sections (future extensions can append new sections via buildCategorySection)
-  for (const cat of usedCategories) {
-    const items = groups.get(cat)!;
-    out += `\n${buildCategorySection(cat, items)}`;
-  }
+  // Flat section list — works for any topic, not just DevOps
+  out += `## Sections\n\n`;
+  out += parse.sections.map((s) => `- [[${s.noteName}]]`).join("\n") + "\n";
 
   return out;
 }
