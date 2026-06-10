@@ -1,7 +1,7 @@
 # Dualyze Structure
 
 <p align="center">
-  <img src="docs/knowledge-map.png" width="1000">
+  <img src="docs/knowledge_map.png" width="1000">
 </p>
 
 Turn long notes into structured knowledge.
