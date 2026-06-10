@@ -24,7 +24,7 @@ export async function createStructure(app: App, file: TFile, settings: DualyzeSe
     await writeNote(app, settings.outputFolder, section.noteName, content);
   }
 
-  // 3. Structure Index（元ファイルを上書き）
+  // 3. Overwrite source file with Structure Index
   const indexContent = buildStructureIndex(parse, original, settings);
   await app.vault.modify(file, indexContent);
 

@@ -12,7 +12,7 @@ export default class DualyzeStructurePlugin extends Plugin {
     await this.loadSettings();
     this.addSettingTab(new DualyzeSettingTab(this.app, this));
 
-    // コマンドパレット
+    // Command palette
     this.addCommand({
       id: "create-structure",
       name: "Create Structure",
@@ -26,7 +26,7 @@ export default class DualyzeStructurePlugin extends Plugin {
       },
     });
 
-    // エディタ内右クリックメニュー
+    // Editor context menu (right-click inside note body)
     this.registerEvent(
       this.app.workspace.on("editor-menu", (menu: Menu, _editor: unknown, view: MarkdownView) => {
         const file = view.file;
@@ -40,7 +40,7 @@ export default class DualyzeStructurePlugin extends Plugin {
       })
     );
 
-    // ファイルエクスプローラー右クリックメニュー
+    // File explorer context menu (right-click on file)
     this.registerEvent(
       this.app.workspace.on("file-menu", (menu: Menu, abstractFile: TAbstractFile) => {
         if (!(abstractFile instanceof TFile) || abstractFile.extension !== "md") return;

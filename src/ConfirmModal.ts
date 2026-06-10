@@ -19,7 +19,7 @@ export class ConfirmModal extends Modal {
     const info = contentEl.createDiv();
     info.createEl("p", { text: `Root Note: ${this.parse.rootTitle}` });
 
-    // Detected Sections プレビュー: 件数 + 見出し一覧
+    // Detected sections preview: count + heading list
     info.createEl("p", { text: `Detected Sections (${this.parse.sections.length})` });
     const sectionList = info.createEl("ul");
     for (const s of this.parse.sections) {
@@ -32,10 +32,10 @@ export class ConfirmModal extends Modal {
     );
     if (this.settings.generateMOC) ul.createEl("li", { text: "✓ MOC" });
 
-    // 元ノートの扱いを明示
+    // Show what will happen to the original note
     const originalMode = this.settings.originalContent === "replace"
-      ? "✓ Structure Index（元の本文は削除され、リンク一覧に置き換わります）"
-      : "✓ Structure Index（元の本文はノート末尾に保持されます）";
+      ? "✓ Structure Index (original body will be replaced with links)"
+      : "✓ Structure Index (original body will be kept at the bottom)";
     ul.createEl("li", { text: originalMode });
 
     new Setting(contentEl)

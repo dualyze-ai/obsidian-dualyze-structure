@@ -4,7 +4,7 @@ import { ParseResult } from "./parser";
 interface CategoryDef {
   category: Category;
   keywords: string[];
-  /** 見出し直下に自動挿入する説明文 */
+  /** One-line description inserted below the category heading */
   description: string;
 }
 
@@ -66,14 +66,14 @@ export function buildMOC(parse: ParseResult): string {
     return items && items.length > 0;
   });
 
-  // Structure Summary ヘッダー
+  // Structure Summary header
   const categoryList = usedCategories.map((c) => `- ${c}`).join("\n");
   let out = `# ${parse.rootTitle} MOC\n\n`;
   out += `Generated from:\n[[${parse.rootTitle}]]\n\n`;
   out += `Sections: ${parse.sections.length}\n\n`;
   out += `Categories:\n${categoryList}\n`;
 
-  // カテゴリセクション（将来拡張: buildCategorySection 単位で後から追加可能）
+  // Category sections (future extensions can append new sections via buildCategorySection)
   for (const cat of usedCategories) {
     const items = groups.get(cat)!;
     out += `\n${buildCategorySection(cat, items)}`;

@@ -1,11 +1,11 @@
 export interface DualyzeSettings {
-  /** 分割ノートと MOC の出力先フォルダ（Vault ルートからの相対 / 空文字なら元ノートと同階層） */
+  /** Output folder for split notes and MOC (relative to vault root; empty = same folder as source note) */
   outputFolder: string;
-  /** 元ノート本文の扱い */
+  /** How to handle the original note body */
   originalContent: "replace" | "keep";
-  /** MOC を生成するか */
+  /** Whether to generate a MOC */
   generateMOC: boolean;
-  /** ファイル名のセパレータ（既定 " - "） */
+  /** Separator used in generated file names (default: " - ") */
   separator: string;
 }
 
@@ -16,17 +16,17 @@ export const DEFAULT_SETTINGS: DualyzeSettings = {
   separator: " - ",
 };
 
-/** 分割された 1 セクション */
+/** One section produced by splitting the source note */
 export interface Section {
-  /** H2 見出しテキスト（# は含まない） */
+  /** H2 heading text (without the ## prefix) */
   heading: string;
-  /** セクション本文（見出し行を除いた中身） */
+  /** Section body (everything after the heading line) */
   body: string;
-  /** ファイル名安全化後のベース名: "<RootTitle> - <Heading>" */
+  /** Sanitized file base name: "<RootTitle> - <Heading>" */
   noteName: string;
 }
 
-/** MOC のカテゴリ */
+/** MOC category */
 export type Category = "Development" | "Automation" | "Operations" | "Architecture" | "Uncategorized";
 
 export interface CreateResult {
