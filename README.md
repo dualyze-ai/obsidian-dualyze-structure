@@ -1,51 +1,38 @@
 # Dualyze Structure
 
-Turn long notes into structured knowledge — one command splits a note into atomic files, builds a navigation index, and generates a visual knowledge map.
+<p align="center">
+  <img src="docs/knowledge-map.png" width="1000">
+</p>
 
-<!-- screenshot: hero — Knowledge Map (Mermaid flowchart) rendered in Obsidian -->
-
----
-
-## The Problem
-
-Long notes are easy to write but hard to navigate. As a note grows, finding a specific section means scrolling — and linking to a single concept inside a 2,000-word document is impossible.
-
-```
-History of Classical Music.md   ← everything is in one file
-  ## Baroque Era
-  ## Classical Period
-  ## Romantic Era
-  ## Modernism
-  ## After 1945
-```
-
-Dualyze Structure solves this in one step.
+Turn long notes into structured knowledge.
 
 ---
 
-## What It Does
+## Before
 
-Run **Create Structure** on any note with `##` headings. The plugin:
+<p align="center">
+  <img src="docs/before2.png" width="900">
+</p>
 
-1. Splits each `##` section into its own atomic note
-2. Adds a `parent:` frontmatter link to each split note
-3. Converts the original note into a **Structure Index** (a linked table of contents)
-4. Generates a **MOC** with a visual knowledge map and related-note links
+A long note with multiple sections and subtopics.
 
-```
-Before                               After
-──────────────────────               ──────────────────────────────────────────
-History of Classical Music.md        History of Classical Music.md  ← Index
-  ## Baroque Era                       Generated/
-  ## Classical Period                    ├─ History of Classical Music - Baroque Era.md
-  ## Romantic Era                        ├─ History of Classical Music - Classical Period.md
-  ## Modernism                           ├─ History of Classical Music - Romantic Era.md
-  ## After 1945                          ├─ History of Classical Music - Modernism.md
-                                         ├─ History of Classical Music - After 1945.md
-                                         └─ History of Classical Music MOC.md
-```
+---
 
-The original note is **never deleted or permanently modified** — the plugin rewrites it in place as the index, and the full original content is preserved in the split notes.
+## Create Structure
+
+<p align="center">
+  <img src="docs/dialog.png" width="700">
+</p>
+
+Preview detected sections before generating.
+
+---
+
+## After
+
+<!-- screenshot: knowledge-map.png -->
+
+Generate split notes, structure index and visual knowledge maps.
 
 ---
 
@@ -76,8 +63,6 @@ Three ways to trigger the command:
 ## Confirmation Dialog
 
 Before writing any files, the plugin shows a preview of what will be created.
-
-<!-- screenshot: confirm dialog -->
 
 The dialog lists every section it detected, and shows exactly how many files will be generated. Click **Create** to proceed or **Cancel** to abort — nothing is written until you confirm.
 
@@ -144,8 +129,6 @@ flowchart LR
 - [[History of Classical Music - Classical Period]]
 ...
 ```
-
-<!-- screenshot: before/after — original note vs generated MOC with flowchart -->
 
 ---
 
