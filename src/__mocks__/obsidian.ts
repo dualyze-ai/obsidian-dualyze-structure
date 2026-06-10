@@ -28,5 +28,16 @@ export class Notice {
   constructor(_msg: string) {}
 }
 export class MarkdownView {}
-export class TFile {}
+export class TAbstractFile {}
+export class TFile extends TAbstractFile {
+  extension = "md";
+}
+export class Menu {
+  addItem(_cb: (item: MenuItem) => void) { return this; }
+}
+export class MenuItem {
+  setTitle(_title: string) { return this; }
+  setIcon(_icon: string) { return this; }
+  onClick(_cb: () => void) { return this; }
+}
 export function normalizePath(path: string) { return path; }
