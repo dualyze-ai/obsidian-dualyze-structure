@@ -315,7 +315,7 @@ var DualyzeStructurePlugin = class extends import_obsidian5.Plugin {
         const file = view == null ? void 0 : view.file;
         if (!file) return false;
         if (checking) return true;
-        this.openStructureModal(file);
+        void this.openStructureModal(file);
         return true;
       }
     });
@@ -324,7 +324,9 @@ var DualyzeStructurePlugin = class extends import_obsidian5.Plugin {
         const file = view.file;
         if (!file) return;
         menu.addItem((item) => {
-          item.setTitle("Create Structure").setIcon("git-fork").onClick(() => this.openStructureModal(file));
+          item.setTitle("Create Structure").setIcon("git-fork").onClick(() => {
+            void this.openStructureModal(file);
+          });
         });
       })
     );
@@ -332,7 +334,9 @@ var DualyzeStructurePlugin = class extends import_obsidian5.Plugin {
       this.app.workspace.on("file-menu", (menu, abstractFile) => {
         if (!(abstractFile instanceof import_obsidian5.TFile) || abstractFile.extension !== "md") return;
         menu.addItem((item) => {
-          item.setTitle("Create Structure").setIcon("git-fork").onClick(() => this.openStructureModal(abstractFile));
+          item.setTitle("Create Structure").setIcon("git-fork").onClick(() => {
+            void this.openStructureModal(abstractFile);
+          });
         });
       })
     );

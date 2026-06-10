@@ -1,7 +1,7 @@
 {
   "id": "dualyze-structure",
   "name": "Dualyze Structure",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "minAppVersion": "1.4.0",
   "description": "Turn long notes into structured knowledge: split notes, parent links, structure index, and MOC.",
   "author": "dualyzeAI",

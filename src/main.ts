@@ -21,7 +21,7 @@ export default class DualyzeStructurePlugin extends Plugin {
         const file = view?.file;
         if (!file) return false;
         if (checking) return true;
-        this.openStructureModal(file);
+        void this.openStructureModal(file);
         return true;
       },
     });
@@ -35,7 +35,7 @@ export default class DualyzeStructurePlugin extends Plugin {
           item
             .setTitle("Create Structure")
             .setIcon("git-fork")
-            .onClick(() => this.openStructureModal(file));
+            .onClick(() => { void this.openStructureModal(file); });
         });
       })
     );
@@ -48,7 +48,7 @@ export default class DualyzeStructurePlugin extends Plugin {
           item
             .setTitle("Create Structure")
             .setIcon("git-fork")
-            .onClick(() => this.openStructureModal(abstractFile));
+            .onClick(() => { void this.openStructureModal(abstractFile); });
         });
       })
     );
