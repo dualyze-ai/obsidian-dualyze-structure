@@ -11,7 +11,7 @@ export interface DualyzeSettings {
 
 export const DEFAULT_SETTINGS: DualyzeSettings = {
   outputFolder: "Generated",
-  originalContent: "replace",
+  originalContent: "keep",
   generateMOC: true,
   separator: " - ",
 };

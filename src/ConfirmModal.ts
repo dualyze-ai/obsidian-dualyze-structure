@@ -27,10 +27,16 @@ export class ConfirmModal extends Modal {
     }
 
     const ul = contentEl.createEl("ul");
-    ["Split Notes", "Parent Links", "Structure Index"].forEach((t) =>
+    ["Split Notes", "Parent Links"].forEach((t) =>
       ul.createEl("li", { text: `✓ ${t}` })
     );
     if (this.settings.generateMOC) ul.createEl("li", { text: "✓ MOC" });
+
+    // 元ノートの扱いを明示
+    const originalMode = this.settings.originalContent === "replace"
+      ? "✓ Structure Index（元の本文は削除され、リンク一覧に置き換わります）"
+      : "✓ Structure Index（元の本文はノート末尾に保持されます）";
+    ul.createEl("li", { text: originalMode });
 
     new Setting(contentEl)
       .addButton((b) =>
