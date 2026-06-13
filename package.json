@@ -1,6 +1,6 @@
 {
   "name": "obsidian-dualyze-structure",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Turn long notes into structured knowledge",
   "main": "main.js",
   "scripts": {
