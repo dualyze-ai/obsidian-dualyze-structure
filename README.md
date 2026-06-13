@@ -40,12 +40,12 @@ Generate split notes, structure index and visual knowledge maps.
 
 ## 📖 Step-by-step Tutorial
 
-Learn how to:
+See how Alice turns a 5,000-line AWS note into:
 
-- Split a 5,000-line note into focused notes
-- Generate a Structure Index
-- Generate an MOC
-- Build a navigable knowledge base
+- 11 focused notes
+- A Structure Index
+- An MOC
+- A navigable knowledge base
 
 → Read the complete tutorial:
 [How Alice Turned a 5,000-Line Note into a Structured Knowledge Base](https://github.com/dualyze-ai/obsidian-dualyze-structure/blob/main/docs/tutorials/tutorial-en-aws.md)
