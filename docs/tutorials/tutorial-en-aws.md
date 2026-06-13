@@ -190,6 +190,11 @@ Before, searching "DynamoDB" returned noise from everywhere in the file. Now it 
 That's the point. Structure isn't about breaking things apart. It's about making things findable.
 
 **Alice:**
+I thought splitting would make things harder to navigate — like I'd lose the thread.
+
+Now I realize the opposite is true. The Structure Index and MOC keep the thread. The split notes make each section actually usable.
+
+**Alice:**
 I have a React guide that's even longer. I'm running this on that next.
 
 ---
