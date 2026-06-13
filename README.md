@@ -38,6 +38,20 @@ Generate split notes, structure index and visual knowledge maps.
 
 ---
 
+## 📖 Step-by-step Tutorial
+
+Learn how to:
+
+- Split a 5,000-line note into focused notes
+- Generate a Structure Index
+- Generate an MOC
+- Build a navigable knowledge base
+
+→ Read the complete tutorial:
+[How Alice Turned a 5,000-Line Note into a Structured Knowledge Base](https://github.com/dualyze-ai/obsidian-dualyze-structure/blob/main/docs/tutorials/tutorial-en-aws.md)
+
+---
+
 ## Features
 
 | Feature | Description |
@@ -47,6 +61,12 @@ Generate split notes, structure index and visual knowledge maps.
 | **Structure Index** | The original note is converted to a clean link list — your navigation hub. |
 | **Knowledge Map** | Automatically generates a visual knowledge map in the MOC using Mermaid flowcharts. |
 | **MOC Generation** | A Map of Content lists all related notes and serves as an overview of the whole topic. |
+
+### Example
+
+See a complete AWS example:
+
+- [How Alice Turned a 5,000-Line Note into a Structured Knowledge Base](https://github.com/dualyze-ai/obsidian-dualyze-structure/blob/main/docs/tutorials/tutorial-en-aws.md)
 
 ---
 
@@ -123,6 +143,12 @@ This MOC provides a navigation hub for the structured notes generated from [[His
 ...
 ```
 
+### Learn by Example
+
+See how Structure Split automatically generates an MOC and Knowledge Map:
+
+- [How Alice Turned a 5,000-Line Note into a Structured Knowledge Base](https://github.com/dualyze-ai/obsidian-dualyze-structure/blob/main/docs/tutorials/tutorial-en-aws.md)
+
 ---
 
 ## Settings
@@ -156,6 +182,15 @@ The [`docs/`](docs/) folder in this repository is a ready-to-open Obsidian vault
 2. Open the `docs/` folder as a vault in Obsidian
 3. Trust community plugins when prompted
 4. Open any sample note → right-click → **Create Structure**
+
+---
+
+## Documentation
+
+### Tutorials
+
+- [How Alice Turned a 5,000-Line Note into a Structured Knowledge Base](https://github.com/dualyze-ai/obsidian-dualyze-structure/blob/main/docs/tutorials/tutorial-en-aws.md)
+- [Japanese Tutorial (AWS Sample)](https://github.com/dualyze-ai/obsidian-dualyze-structure/blob/main/docs/tutorials/tutorial-ja-aws.md)
 
 ---
 
